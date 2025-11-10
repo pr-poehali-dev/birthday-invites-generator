@@ -3,373 +3,424 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import Icon from '@/components/ui/icon';
 import html2canvas from 'html2canvas';
 
 interface InvitationData {
   name: string;
-  date: string;
-  time: string;
-  place: string;
+  address: string;
+  location: string;
+  timeFrom: string;
+  timeTo: string;
 }
 
 const Index = () => {
   const [invitationData, setInvitationData] = useState<InvitationData>({
     name: '',
-    date: '',
-    time: '',
-    place: ''
+    address: '',
+    location: '',
+    timeFrom: '',
+    timeTo: ''
   });
   
-  const [showPreview, setShowPreview] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<'red' | 'teal'>('red');
   const invitationRef = useRef<HTMLDivElement>(null);
 
   const handleInputChange = (field: keyof InvitationData, value: string) => {
     setInvitationData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleGenerate = () => {
-    if (invitationData.name && invitationData.date && invitationData.time && invitationData.place) {
-      setShowPreview(true);
-    }
-  };
-
   const handleDownload = async () => {
     if (invitationRef.current) {
       const canvas = await html2canvas(invitationRef.current, {
-        scale: 2,
-        backgroundColor: null
+        scale: 3,
+        backgroundColor: null,
+        width: 809,
+        height: 400
       });
       const link = document.createElement('a');
-      link.download = `invitation-${invitationData.name}.png`;
-      link.href = canvas.toDataURL();
+      link.download = `invitation-${invitationData.name || 'bunker'}.png`;
+      link.href = canvas.toDataURL('image/png');
       link.click();
     }
   };
 
-  const galleryExamples = [
-    { id: 1, theme: 'Космическая битва', color: 'from-purple-600 to-blue-600' },
-    { id: 2, theme: 'Неоновый штурм', color: 'from-pink-600 to-yellow-500' },
-    { id: 3, theme: 'Лазерный арсенал', color: 'from-red-600 to-orange-500' }
-  ];
+  const RedTemplate = () => (
+    <div className="relative w-[809px] h-[400px] bg-gradient-to-b from-[#D32F2F] to-[#B71C1C] overflow-hidden">
+      <div className="absolute inset-0">
+        <svg className="absolute top-12 left-8 w-20 h-20 text-white/80" viewBox="0 0 100 100" fill="none">
+          <path d="M50 20 L30 35 L30 65 L50 80 L70 65 L70 35 Z" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <path d="M50 35 L40 42 L40 58 L50 65 L60 58 L60 42 Z" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <circle cx="50" cy="50" r="5" fill="currentColor"/>
+        </svg>
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMzLjMxNCAwIDYgMi42ODYgNiA2cy0yLjY4NiA2LTYgNi02LTIuNjg2LTYtNiAyLjY4Ni02IDYtNm0wLTJjLTQuNDE4IDAtOCAzLjU4Mi04IDhzMy41ODIgOCA4IDggOC0zLjU4MiA4LTgtMy41ODItOC04LTh6IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9Ii4wNSIvPjwvZz48L3N2Zz4=')] opacity-30"></div>
-      
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-32 bg-gradient-to-b from-yellow-400 to-transparent opacity-50 animate-laser-shoot"></div>
-        <div className="absolute top-40 right-20 w-2 h-32 bg-gradient-to-b from-cyan-400 to-transparent opacity-50 animate-laser-shoot" style={{ animationDelay: '0.5s' }}></div>
-        <div className="absolute bottom-40 left-1/4 w-2 h-32 bg-gradient-to-b from-red-400 to-transparent opacity-50 animate-laser-shoot" style={{ animationDelay: '1s' }}></div>
+        <svg className="absolute top-20 right-16 w-16 h-16 text-white/70" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="2" fill="none"/>
+          <circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="1" fill="none"/>
+          <line x1="50" y1="5" x2="50" y2="25" stroke="currentColor" strokeWidth="2"/>
+          <line x1="50" y1="75" x2="50" y2="95" stroke="currentColor" strokeWidth="2"/>
+          <line x1="5" y1="50" x2="25" y2="50" stroke="currentColor" strokeWidth="2"/>
+          <line x1="75" y1="50" x2="95" y2="50" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+
+        <svg className="absolute bottom-16 left-12 w-24 h-24 text-white/60" viewBox="0 0 100 100">
+          <rect x="20" y="30" width="15" height="40" fill="currentColor"/>
+          <rect x="40" y="30" width="20" height="40" fill="currentColor"/>
+          <circle cx="50" cy="25" r="8" fill="currentColor"/>
+          <polygon points="60,35 75,50 60,65" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute bottom-24 right-12 w-20 h-20 text-white/70" viewBox="0 0 100 100">
+          <path d="M30 50 Q50 30 70 50 Q50 70 30 50" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <circle cx="50" cy="50" r="8" fill="currentColor"/>
+          <line x1="50" y1="20" x2="50" y2="35" stroke="currentColor" strokeWidth="2"/>
+          <line x1="50" y1="65" x2="50" y2="80" stroke="currentColor" strokeWidth="2"/>
+        </svg>
+
+        <svg className="absolute top-1/2 left-6 -translate-y-1/2 w-14 h-14 text-white/60" viewBox="0 0 100 100">
+          <path d="M20 50 L35 35 L35 45 L65 45 L65 35 L80 50 L65 65 L65 55 L35 55 L35 65 Z" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute top-28 left-20 w-12 h-12 text-white/50" viewBox="0 0 100 100">
+          <path d="M50 20 L60 40 L80 45 L65 60 L68 80 L50 70 L32 80 L35 60 L20 45 L40 40 Z" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute bottom-32 right-28 w-16 h-16 text-white/60" viewBox="0 0 100 100">
+          <path d="M30 70 Q30 50 50 50 Q70 50 70 30" stroke="currentColor" strokeWidth="4" fill="none"/>
+          <path d="M50 50 L50 20 M35 35 L50 20 L65 35" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <circle cx="30" cy="70" r="6" fill="currentColor"/>
+        </svg>
       </div>
 
-      <div className="container mx-auto px-4 py-8 relative z-10">
-        <header className="text-center mb-12 animate-float">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <Icon name="Target" size={48} className="text-yellow-400 animate-neon-pulse" />
-            <h1 className="text-5xl md:text-7xl font-black bg-gradient-to-r from-yellow-400 via-red-500 to-cyan-400 bg-clip-text text-transparent drop-shadow-lg">
-              ЛАЗЕРТАГ ПАТИ
-            </h1>
-            <Icon name="Zap" size={48} className="text-cyan-400 animate-neon-pulse" />
+      <div className="relative z-10 p-8 h-full flex flex-col justify-center text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div className="space-y-4">
+          <div className="text-3xl font-bold leading-tight">
+            <span className="bg-white text-[#D32F2F] px-3 py-1 inline-block rounded-md mr-2">
+              {invitationData.name || '________'}
+            </span>
+            <span>, я буду отмечать свой День Рождения</span>
           </div>
-          <p className="text-xl md:text-2xl text-cyan-300 font-bold tracking-wide">
-            Создай крутые пригласительные за секунды! 🎯
+          
+          <div className="text-3xl font-bold">
+            в Лазертаг-клубе «BUNKER»
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>по адресу</span>
+            <span className="bg-white text-[#D32F2F] px-3 py-1 rounded-md">
+              {invitationData.address || '________________________'}
+            </span>
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>на площадке</span>
+            <span className="bg-white text-[#D32F2F] px-3 py-1 rounded-md">
+              {invitationData.location || '______________'}
+            </span>
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>с</span>
+            <span className="bg-white text-[#D32F2F] px-2 py-1 rounded-md w-24 text-center">
+              {invitationData.timeFrom || '_____'}
+            </span>
+            <span>до</span>
+            <span className="bg-white text-[#D32F2F] px-2 py-1 rounded-md w-24 text-center">
+              {invitationData.timeTo || '_____'}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t-4 border-[#8B1818]">
+          <div className="text-5xl font-black text-center tracking-wider">
+            БУДУ ЖДАТЬ ТЕБЯ!
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-6 right-6 w-20 h-20 z-20">
+        <svg viewBox="0 0 100 100" className="text-white">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <text x="50" y="42" fontSize="24" fontWeight="bold" textAnchor="middle" fill="currentColor">BUNKER</text>
+          <text x="50" y="62" fontSize="12" textAnchor="middle" fill="currentColor">LASERTAG CLUB</text>
+        </svg>
+      </div>
+    </div>
+  );
+
+  const TealTemplate = () => (
+    <div className="relative w-[809px] h-[400px] bg-gradient-to-b from-[#00897B] to-[#00695C] overflow-hidden">
+      <div className="absolute inset-0">
+        <svg className="absolute top-12 left-8 w-20 h-20 text-[#FFB74D]/80" viewBox="0 0 100 100" fill="none">
+          <ellipse cx="35" cy="50" rx="15" ry="25" fill="currentColor"/>
+          <ellipse cx="65" cy="50" rx="15" ry="25" fill="currentColor"/>
+          <circle cx="50" cy="50" r="20" fill="currentColor"/>
+          <line x1="20" y1="50" x2="10" y2="45" stroke="currentColor" strokeWidth="3"/>
+          <line x1="20" y1="50" x2="10" y2="55" stroke="currentColor" strokeWidth="3"/>
+          <line x1="80" y1="50" x2="90" y2="45" stroke="currentColor" strokeWidth="3"/>
+          <line x1="80" y1="50" x2="90" y2="55" stroke="currentColor" strokeWidth="3"/>
+        </svg>
+
+        <svg className="absolute top-32 left-20 w-14 h-14 text-[#FF6F00]/70" viewBox="0 0 100 100">
+          <path d="M50 20 L60 40 L80 45 L65 60 L68 80 L50 70 L32 80 L35 60 L20 45 L40 40 Z" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute bottom-20 left-16 w-24 h-24 text-[#FFB74D]/60" viewBox="0 0 100 100">
+          <ellipse cx="50" cy="50" rx="25" ry="35" fill="currentColor"/>
+          <circle cx="50" cy="30" r="8" fill="#00897B"/>
+          <circle cx="40" cy="50" r="5" fill="#00897B"/>
+          <circle cx="60" cy="50" r="5" fill="#00897B"/>
+          <path d="M35 65 Q50 75 65 65" stroke="#00897B" strokeWidth="3" fill="none"/>
+        </svg>
+
+        <svg className="absolute top-20 right-20 w-16 h-16 text-[#FFA726]/80" viewBox="0 0 100 100">
+          <circle cx="30" cy="50" r="8" fill="currentColor"/>
+          <ellipse cx="55" cy="50" rx="20" ry="30" fill="currentColor"/>
+          <line x1="75" y1="35" x2="85" y2="25" stroke="currentColor" strokeWidth="3"/>
+          <line x1="75" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="3"/>
+          <line x1="75" y1="65" x2="85" y2="75" stroke="currentColor" strokeWidth="3"/>
+        </svg>
+
+        <svg className="absolute bottom-28 right-16 w-18 h-18 text-[#4FC3F7]/70" viewBox="0 0 100 100">
+          <path d="M50 20 L35 50 L50 45 L50 80 L65 50 L50 55 Z" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute top-1/2 right-8 -translate-y-1/2 w-12 h-12 text-[#FF7043]/60" viewBox="0 0 100 100">
+          <circle cx="50" cy="30" r="8" fill="currentColor"/>
+          <ellipse cx="50" cy="60" rx="12" ry="20" fill="currentColor"/>
+        </svg>
+
+        <svg className="absolute bottom-36 right-32 w-14 h-14 text-[#FFB74D]/50" viewBox="0 0 100 100">
+          <circle cx="35" cy="35" r="8" fill="currentColor"/>
+          <circle cx="65" cy="35" r="8" fill="currentColor"/>
+          <circle cx="35" cy="65" r="8" fill="currentColor"/>
+          <circle cx="65" cy="65" r="8" fill="currentColor"/>
+          <rect x="35" y="35" width="30" height="30" fill="currentColor"/>
+        </svg>
+      </div>
+
+      <div className="relative z-10 p-8 h-full flex flex-col justify-center text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div className="space-y-4">
+          <div className="text-3xl font-bold leading-tight">
+            <span className="bg-white text-[#00897B] px-3 py-1 inline-block rounded-md mr-2">
+              {invitationData.name || '________'}
+            </span>
+            <span>, я буду отмечать свой День Рождения</span>
+          </div>
+          
+          <div className="text-3xl font-bold">
+            в Лазертаг-клубе «BUNKER»
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>по адресу</span>
+            <span className="bg-white text-[#00897B] px-3 py-1 rounded-md">
+              {invitationData.address || '________________________'}
+            </span>
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>на площадке</span>
+            <span className="bg-white text-[#00897B] px-3 py-1 rounded-md">
+              {invitationData.location || '______________'}
+            </span>
+          </div>
+
+          <div className="text-3xl font-bold flex items-center gap-2">
+            <span>с</span>
+            <span className="bg-white text-[#00897B] px-2 py-1 rounded-md w-24 text-center">
+              {invitationData.timeFrom || '_____'}
+            </span>
+            <span>до</span>
+            <span className="bg-white text-[#00897B] px-2 py-1 rounded-md w-24 text-center">
+              {invitationData.timeTo || '_____'}
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-6 border-t-4 border-[#00695C]">
+          <div className="text-5xl font-black text-center tracking-wider">
+            БУДУ ЖДАТЬ ТЕБЯ!
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-6 right-6 w-20 h-20 z-20">
+        <svg viewBox="0 0 100 100" className="text-white">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="3" fill="none"/>
+          <text x="50" y="42" fontSize="24" fontWeight="bold" textAnchor="middle" fill="currentColor">BUNKER</text>
+          <text x="50" y="62" fontSize="12" textAnchor="middle" fill="currentColor">LASERTAG CLUB</text>
+        </svg>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-[#121212] relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-black via-[#1a1a1a] to-black opacity-90"></div>
+      
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
+        <div className="absolute top-20 left-10 w-1 h-40 bg-gradient-to-b from-red-500 to-transparent animate-laser-shoot"></div>
+        <div className="absolute top-40 right-20 w-1 h-40 bg-gradient-to-b from-[#00BCD4] to-transparent animate-laser-shoot" style={{ animationDelay: '0.7s' }}></div>
+        <div className="absolute bottom-40 left-1/3 w-1 h-40 bg-gradient-to-b from-yellow-500 to-transparent animate-laser-shoot" style={{ animationDelay: '1.4s' }}></div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        <header className="text-center mb-16">
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
+              <Icon name="Target" size={28} className="text-white" />
+            </div>
+            <h1 className="text-6xl md:text-7xl font-black text-white tracking-tight">
+              ГЕНЕРАТОР ПРИГЛАСИТЕЛЬНЫХ
+            </h1>
+            <div className="w-12 h-12 bg-[#00BCD4] rounded-full flex items-center justify-center">
+              <Icon name="Zap" size={28} className="text-white" />
+            </div>
+          </div>
+          <p className="text-xl text-gray-400 font-medium">
+            Лазертаг-клуб BUNKER
           </p>
         </header>
 
-        <Tabs defaultValue="generator" className="w-full max-w-6xl mx-auto">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-slate-800/80 backdrop-blur-md border-2 border-cyan-500/30 rounded-xl p-2">
-            <TabsTrigger 
-              value="generator" 
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-yellow-400 data-[state=active]:to-orange-500 data-[state=active]:text-slate-900 font-bold text-lg rounded-lg transition-all hover:scale-105"
-            >
-              <Icon name="Sparkles" size={20} className="mr-2" />
-              Генератор
-            </TabsTrigger>
-            <TabsTrigger 
-              value="gallery"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-400 data-[state=active]:to-blue-500 data-[state=active]:text-slate-900 font-bold text-lg rounded-lg transition-all hover:scale-105"
-            >
-              <Icon name="Images" size={20} className="mr-2" />
-              Галерея
-            </TabsTrigger>
-            <TabsTrigger 
-              value="about"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-500 data-[state=active]:to-pink-500 data-[state=active]:text-white font-bold text-lg rounded-lg transition-all hover:scale-105"
-            >
-              <Icon name="Info" size={20} className="mr-2" />
-              О нас
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="generator">
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="p-8 bg-slate-800/60 backdrop-blur-md border-2 border-yellow-500/30 shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300">
-                <div className="flex items-center gap-3 mb-6">
-                  <Icon name="Gamepad2" size={32} className="text-yellow-400" />
-                  <h2 className="text-3xl font-black text-yellow-400">Заполни данные</h2>
-                </div>
-                
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-cyan-300 font-bold text-lg">
-                      <Icon name="User" size={18} className="inline mr-2" />
-                      Имя именинника
-                    </Label>
-                    <Input
-                      id="name"
-                      placeholder="Введи имя..."
-                      value={invitationData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="bg-slate-900/50 border-2 border-cyan-500/50 focus:border-cyan-400 text-white text-lg h-14 rounded-xl"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="date" className="text-cyan-300 font-bold text-lg">
-                      <Icon name="Calendar" size={18} className="inline mr-2" />
-                      Дата праздника
-                    </Label>
-                    <Input
-                      id="date"
-                      type="date"
-                      value={invitationData.date}
-                      onChange={(e) => handleInputChange('date', e.target.value)}
-                      className="bg-slate-900/50 border-2 border-cyan-500/50 focus:border-cyan-400 text-white text-lg h-14 rounded-xl"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="time" className="text-cyan-300 font-bold text-lg">
-                      <Icon name="Clock" size={18} className="inline mr-2" />
-                      Время начала
-                    </Label>
-                    <Input
-                      id="time"
-                      type="time"
-                      value={invitationData.time}
-                      onChange={(e) => handleInputChange('time', e.target.value)}
-                      className="bg-slate-900/50 border-2 border-cyan-500/50 focus:border-cyan-400 text-white text-lg h-14 rounded-xl"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="place" className="text-cyan-300 font-bold text-lg">
-                      <Icon name="MapPin" size={18} className="inline mr-2" />
-                      Место проведения
-                    </Label>
-                    <Input
-                      id="place"
-                      placeholder="Адрес арены..."
-                      value={invitationData.place}
-                      onChange={(e) => handleInputChange('place', e.target.value)}
-                      className="bg-slate-900/50 border-2 border-cyan-500/50 focus:border-cyan-400 text-white text-lg h-14 rounded-xl"
-                    />
-                  </div>
-
-                  <Button 
-                    onClick={handleGenerate}
-                    className="w-full h-16 text-xl font-black bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 hover:from-yellow-500 hover:via-red-600 hover:to-pink-600 text-slate-900 rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                  >
-                    <Icon name="Sparkles" size={24} className="mr-2" />
-                    СОЗДАТЬ ПРИГЛАШЕНИЕ
-                    <Icon name="Rocket" size={24} className="ml-2" />
-                  </Button>
-                </div>
-              </Card>
-
-              <div className="space-y-4">
-                {showPreview && (
-                  <>
-                    <Card 
-                      ref={invitationRef}
-                      className="p-8 bg-gradient-to-br from-purple-900 via-slate-900 to-cyan-900 border-4 border-yellow-400 shadow-2xl relative overflow-hidden"
-                    >
-                      <div className="absolute inset-0 bg-[url('https://cdn.poehali.dev/projects/25e9299d-0962-497f-879c-97d33f4d39d2/files/2048809b-2d55-4e4b-962e-0cb91ccd102e.jpg')] opacity-20 bg-cover bg-center"></div>
-                      
-                      <div className="relative z-10">
-                        <div className="text-center mb-6">
-                          <Icon name="PartyPopper" size={64} className="mx-auto text-yellow-400 mb-4 animate-float" />
-                          <h3 className="text-4xl md:text-5xl font-black text-yellow-400 mb-2 drop-shadow-lg">
-                            ДЕНЬ РОЖДЕНИЯ!
-                          </h3>
-                          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
-                        </div>
-
-                        <div className="space-y-4 text-center">
-                          <div className="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border-2 border-cyan-400/50">
-                            <p className="text-cyan-300 text-sm font-bold mb-1">ИМЕНИННИК:</p>
-                            <p className="text-3xl font-black text-white">{invitationData.name}</p>
-                          </div>
-
-                          <div className="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border-2 border-red-400/50">
-                            <p className="text-red-300 text-sm font-bold mb-1">ДАТА И ВРЕМЯ:</p>
-                            <p className="text-xl font-bold text-white">
-                              {new Date(invitationData.date).toLocaleDateString('ru-RU', { 
-                                day: 'numeric', 
-                                month: 'long', 
-                                year: 'numeric' 
-                              })}
-                            </p>
-                            <p className="text-2xl font-black text-yellow-400">{invitationData.time}</p>
-                          </div>
-
-                          <div className="bg-slate-900/70 backdrop-blur-sm p-4 rounded-xl border-2 border-purple-400/50">
-                            <p className="text-purple-300 text-sm font-bold mb-1">МЕСТО:</p>
-                            <p className="text-xl font-bold text-white">{invitationData.place}</p>
-                          </div>
-                        </div>
-
-                        <div className="mt-6 text-center">
-                          <div className="flex items-center justify-center gap-2 mb-2">
-                            <Icon name="Target" size={24} className="text-cyan-400" />
-                            <p className="text-2xl font-black text-transparent bg-gradient-to-r from-yellow-400 to-red-500 bg-clip-text">
-                              ЛАЗЕРТАГ АРЕНА
-                            </p>
-                            <Icon name="Zap" size={24} className="text-yellow-400" />
-                          </div>
-                          <p className="text-cyan-300 font-bold">Будет круто! 🎯🎮🚀</p>
-                        </div>
-                      </div>
-                    </Card>
-
-                    <Button 
-                      onClick={handleDownload}
-                      className="w-full h-14 text-lg font-black bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                    >
-                      <Icon name="Download" size={20} className="mr-2" />
-                      СКАЧАТЬ ПРИГЛАСИТЕЛЬНОЕ
-                    </Button>
-                  </>
-                )}
-                
-                {!showPreview && (
-                  <Card className="p-12 bg-slate-800/40 backdrop-blur-md border-2 border-dashed border-cyan-500/30 h-full flex items-center justify-center">
-                    <div className="text-center">
-                      <Icon name="ImagePlus" size={80} className="mx-auto text-cyan-400/50 mb-4" />
-                      <p className="text-cyan-300/70 text-xl font-bold">
-                        Заполни форму, чтобы увидеть предпросмотр
-                      </p>
-                    </div>
-                  </Card>
-                )}
-              </div>
+        <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
+          <Card className="p-8 bg-[#1E1E1E] border-2 border-red-600/30 shadow-2xl">
+            <div className="flex items-center gap-3 mb-8">
+              <Icon name="FileEdit" size={32} className="text-red-500" />
+              <h2 className="text-3xl font-black text-white">Заполните данные</h2>
             </div>
-          </TabsContent>
-
-          <TabsContent value="gallery">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl font-black text-transparent bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text mb-4">
-                Примеры наших работ
-              </h2>
-              <p className="text-cyan-300 text-lg">Вдохновись и создай своё уникальное приглашение!</p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-6">
-              {galleryExamples.map((example) => (
-                <Card 
-                  key={example.id}
-                  className={`p-8 bg-gradient-to-br ${example.color} border-2 border-white/20 shadow-2xl hover:scale-105 transition-all duration-300 cursor-pointer group relative overflow-hidden`}
-                >
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all"></div>
-                  <div className="relative z-10">
-                    <Icon name="Star" size={48} className="mx-auto text-yellow-300 mb-4 group-hover:animate-spin" />
-                    <h3 className="text-2xl font-black text-white text-center mb-2">{example.theme}</h3>
-                    <p className="text-white/80 text-center">Пример #{example.id}</p>
-                    <div className="mt-4 flex justify-center">
-                      <Icon name="Trophy" size={32} className="text-yellow-300" />
-                    </div>
-                  </div>
-                </Card>
-              ))}
-            </div>
-
-            <Card className="mt-8 p-8 bg-slate-800/60 backdrop-blur-md border-2 border-purple-500/30 text-center">
-              <Icon name="Palette" size={48} className="mx-auto text-purple-400 mb-4" />
-              <h3 className="text-2xl font-black text-purple-400 mb-2">Хочешь уникальный дизайн?</h3>
-              <p className="text-cyan-300 text-lg mb-4">Мы создадим индивидуальное приглашение специально для тебя!</p>
-              <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold px-8 py-6 text-lg rounded-xl">
-                <Icon name="Mail" size={20} className="mr-2" />
-                Связаться с нами
-              </Button>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="about">
-            <div className="max-w-4xl mx-auto space-y-8">
-              <Card className="p-8 bg-gradient-to-br from-slate-800/80 to-purple-900/50 backdrop-blur-md border-2 border-cyan-500/30 shadow-2xl">
-                <div className="text-center mb-8">
-                  <Icon name="Rocket" size={64} className="mx-auto text-yellow-400 mb-4 animate-float" />
-                  <h2 className="text-4xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-red-500 to-cyan-400 bg-clip-text mb-4">
-                    О нашем сервисе
-                  </h2>
-                  <div className="h-1 w-48 bg-gradient-to-r from-transparent via-cyan-400 to-transparent mx-auto"></div>
-                </div>
-
-                <div className="space-y-6 text-lg text-cyan-100">
-                  <p className="leading-relaxed">
-                    <span className="font-bold text-yellow-400">ЛАЗЕРТАГ ПАТИ</span> — это твой личный генератор крутых пригласительных на день рождения! 🎯
-                  </p>
-                  <p className="leading-relaxed">
-                    Мы знаем, как важен каждый праздник, и создали этот сервис, чтобы ты мог за пару минут сделать яркие, стильные приглашения в тематике лазертага и космических приключений.
-                  </p>
-                </div>
-              </Card>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <Card className="p-6 bg-slate-800/60 backdrop-blur-md border-2 border-yellow-500/30 hover:border-yellow-400 transition-all hover:scale-105">
-                  <Icon name="Zap" size={40} className="text-yellow-400 mb-4" />
-                  <h3 className="text-2xl font-black text-yellow-400 mb-3">Быстро</h3>
-                  <p className="text-cyan-100">Создай приглашение за 2 минуты! Никаких сложных программ и редакторов.</p>
-                </Card>
-
-                <Card className="p-6 bg-slate-800/60 backdrop-blur-md border-2 border-red-500/30 hover:border-red-400 transition-all hover:scale-105">
-                  <Icon name="Sparkles" size={40} className="text-red-400 mb-4" />
-                  <h3 className="text-2xl font-black text-red-400 mb-3">Стильно</h3>
-                  <p className="text-cyan-100">Яркий дизайн в стиле лазертаг-арены с неоновыми эффектами.</p>
-                </Card>
-
-                <Card className="p-6 bg-slate-800/60 backdrop-blur-md border-2 border-cyan-500/30 hover:border-cyan-400 transition-all hover:scale-105">
-                  <Icon name="Download" size={40} className="text-cyan-400 mb-4" />
-                  <h3 className="text-2xl font-black text-cyan-400 mb-3">Удобно</h3>
-                  <p className="text-cyan-100">Скачай готовое изображение и отправь друзьям в мессенджерах.</p>
-                </Card>
-
-                <Card className="p-6 bg-slate-800/60 backdrop-blur-md border-2 border-purple-500/30 hover:border-purple-400 transition-all hover:scale-105">
-                  <Icon name="Heart" size={40} className="text-purple-400 mb-4" />
-                  <h3 className="text-2xl font-black text-purple-400 mb-3">Бесплатно</h3>
-                  <p className="text-cyan-100">Создавай неограниченное количество пригласительных совершенно бесплатно!</p>
-                </Card>
+            
+            <div className="space-y-6 mb-8">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-gray-300 font-semibold text-base">
+                  Имя именинника
+                </Label>
+                <Input
+                  id="name"
+                  placeholder="Введите имя"
+                  value={invitationData.name}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                />
               </div>
 
-              <Card className="p-8 bg-gradient-to-r from-yellow-500/20 via-red-500/20 to-cyan-500/20 backdrop-blur-md border-2 border-white/20 text-center">
-                <Icon name="MessageCircle" size={48} className="mx-auto text-cyan-400 mb-4" />
-                <h3 className="text-3xl font-black text-white mb-4">Есть вопросы?</h3>
-                <p className="text-cyan-100 text-lg mb-6">Свяжись с нами, и мы с радостью поможем!</p>
-                <div className="flex flex-wrap justify-center gap-4">
-                  <Button className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold px-6 py-3 rounded-xl">
-                    <Icon name="Phone" size={20} className="mr-2" />
-                    +7 (999) 123-45-67
-                  </Button>
-                  <Button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold px-6 py-3 rounded-xl">
-                    <Icon name="Mail" size={20} className="mr-2" />
-                    info@lazertag-party.ru
-                  </Button>
-                </div>
-              </Card>
-            </div>
-          </TabsContent>
-        </Tabs>
+              <div className="space-y-2">
+                <Label htmlFor="address" className="text-gray-300 font-semibold text-base">
+                  Адрес
+                </Label>
+                <Input
+                  id="address"
+                  placeholder="ул. Ленина, 123"
+                  value={invitationData.address}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
+                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                />
+              </div>
 
-        <footer className="mt-16 text-center text-cyan-300/70 pb-8">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Icon name="Target" size={20} />
-            <p className="font-bold">ЛАЗЕРТАГ ПАТИ © 2024</p>
-            <Icon name="Zap" size={20} />
+              <div className="space-y-2">
+                <Label htmlFor="location" className="text-gray-300 font-semibold text-base">
+                  Площадка
+                </Label>
+                <Input
+                  id="location"
+                  placeholder="Красный зал"
+                  value={invitationData.location}
+                  onChange={(e) => handleInputChange('location', e.target.value)}
+                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="timeFrom" className="text-gray-300 font-semibold text-base">
+                    Время начала
+                  </Label>
+                  <Input
+                    id="timeFrom"
+                    type="time"
+                    value={invitationData.timeFrom}
+                    onChange={(e) => handleInputChange('timeFrom', e.target.value)}
+                    className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="timeTo" className="text-gray-300 font-semibold text-base">
+                    Время окончания
+                  </Label>
+                  <Input
+                    id="timeTo"
+                    type="time"
+                    value={invitationData.timeTo}
+                    onChange={(e) => handleInputChange('timeTo', e.target.value)}
+                    className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <Label className="text-gray-300 font-semibold text-base">Выберите дизайн</Label>
+              <RadioGroup value={selectedTemplate} onValueChange={(value: 'red' | 'teal') => setSelectedTemplate(value)}>
+                <div className="flex items-center space-x-2 p-3 bg-[#2A2A2A] rounded-lg border-2 border-gray-700 hover:border-red-500 transition-colors">
+                  <RadioGroupItem value="red" id="red" />
+                  <Label htmlFor="red" className="flex-1 cursor-pointer text-white font-medium">
+                    Красный дизайн
+                  </Label>
+                  <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded"></div>
+                </div>
+                <div className="flex items-center space-x-2 p-3 bg-[#2A2A2A] rounded-lg border-2 border-gray-700 hover:border-[#00BCD4] transition-colors">
+                  <RadioGroupItem value="teal" id="teal" />
+                  <Label htmlFor="teal" className="flex-1 cursor-pointer text-white font-medium">
+                    Бирюзовый дизайн
+                  </Label>
+                  <div className="w-8 h-8 bg-gradient-to-br from-teal-500 to-teal-700 rounded"></div>
+                </div>
+              </RadioGroup>
+            </div>
+
+            <Button 
+              onClick={handleDownload}
+              className="w-full h-14 text-xl font-black bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-lg shadow-lg hover:shadow-red-500/50 transition-all duration-300"
+            >
+              <Icon name="Download" size={24} className="mr-3" />
+              Скачать пригласительное
+            </Button>
+          </Card>
+
+          <div className="space-y-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Icon name="Eye" size={32} className="text-[#00BCD4]" />
+              <h2 className="text-3xl font-black text-white">Предпросмотр</h2>
+            </div>
+            
+            <div className="bg-[#1E1E1E] p-6 rounded-xl border-2 border-[#00BCD4]/30 shadow-2xl">
+              <div className="flex justify-center items-center" style={{ transform: 'scale(0.7)', transformOrigin: 'top center' }}>
+                <div ref={invitationRef}>
+                  {selectedTemplate === 'red' ? <RedTemplate /> : <TealTemplate />}
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-[#1E1E1E] p-6 rounded-xl border-2 border-yellow-500/30">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name="Info" size={20} className="text-black" />
+                </div>
+                <div className="text-gray-300">
+                  <p className="font-semibold text-white mb-2">Как использовать:</p>
+                  <ul className="space-y-1 text-sm">
+                    <li>• Заполните все поля формы</li>
+                    <li>• Выберите понравившийся дизайн</li>
+                    <li>• Нажмите "Скачать пригласительное"</li>
+                    <li>• Отправьте гостям в мессенджере</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-sm">Делаем праздники незабываемыми! 🎯🚀</p>
-        </footer>
+        </div>
       </div>
     </div>
   );
