@@ -8,7 +8,6 @@ import Icon from '@/components/ui/icon';
 import html2canvas from 'html2canvas';
 
 interface InvitationData {
-  name: string;
   address: string;
   location: string;
   timeFrom: string;
@@ -17,7 +16,6 @@ interface InvitationData {
 
 const Index = () => {
   const [invitationData, setInvitationData] = useState<InvitationData>({
-    name: '',
     address: '',
     location: '',
     timeFrom: '',
@@ -40,7 +38,7 @@ const Index = () => {
         height: 400
       });
       const link = document.createElement('a');
-      link.download = `invitation-${invitationData.name || 'bunker'}.png`;
+      link.download = `invitation-bunker.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     }
@@ -94,49 +92,47 @@ const Index = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 p-8 h-full flex flex-col justify-center text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
-        <div className="space-y-4">
-          <div className="text-3xl font-bold leading-tight">
-            <span className="bg-white text-[#D32F2F] px-3 py-1 inline-block rounded-md mr-2">
-              {invitationData.name || '________'}
-            </span>
-            <span>, я буду отмечать свой День Рождения</span>
-          </div>
+      <div className="relative z-10 p-8 h-full flex flex-col justify-between text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div className="space-y-3 mt-4">
+          <p className="text-3xl font-bold leading-relaxed">
+            <span className="bg-white text-[#D32F2F] px-3 py-1 inline-block rounded-md">Дорогой друг</span>
+            <span className="inline-block ml-2">, я буду отмечать свой День Рождения</span>
+          </p>
           
-          <div className="text-3xl font-bold">
+          <p className="text-3xl font-bold">
             в Лазертаг-клубе «BUNKER»
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>по адресу</span>
-            <span className="bg-white text-[#D32F2F] px-3 py-1 rounded-md">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">по адресу</span>
+            <span className="bg-white text-[#D32F2F] px-3 py-1 inline-block rounded-md ml-2 min-w-[280px]">
               {invitationData.address || '________________________'}
             </span>
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>на площадке</span>
-            <span className="bg-white text-[#D32F2F] px-3 py-1 rounded-md">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">на площадке</span>
+            <span className="bg-white text-[#D32F2F] px-3 py-1 inline-block rounded-md ml-2 min-w-[200px]">
               {invitationData.location || '______________'}
             </span>
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>с</span>
-            <span className="bg-white text-[#D32F2F] px-2 py-1 rounded-md w-24 text-center">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">с</span>
+            <span className="bg-white text-[#D32F2F] px-2 py-1 inline-block rounded-md mx-2 w-24 text-center">
               {invitationData.timeFrom || '_____'}
             </span>
-            <span>до</span>
-            <span className="bg-white text-[#D32F2F] px-2 py-1 rounded-md w-24 text-center">
+            <span className="inline-block">до</span>
+            <span className="bg-white text-[#D32F2F] px-2 py-1 inline-block rounded-md ml-2 w-24 text-center">
               {invitationData.timeTo || '_____'}
             </span>
-          </div>
+          </p>
         </div>
 
-        <div className="mt-8 pt-6 border-t-4 border-[#8B1818]">
-          <div className="text-5xl font-black text-center tracking-wider">
+        <div className="border-t-4 border-[#8B1818] pt-5">
+          <p className="text-5xl font-black text-center tracking-wider">
             БУДУ ЖДАТЬ ТЕБЯ!
-          </div>
+          </p>
         </div>
       </div>
 
@@ -201,49 +197,47 @@ const Index = () => {
         </svg>
       </div>
 
-      <div className="relative z-10 p-8 h-full flex flex-col justify-center text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
-        <div className="space-y-4">
-          <div className="text-3xl font-bold leading-tight">
-            <span className="bg-white text-[#00897B] px-3 py-1 inline-block rounded-md mr-2">
-              {invitationData.name || '________'}
-            </span>
-            <span>, я буду отмечать свой День Рождения</span>
-          </div>
+      <div className="relative z-10 p-8 h-full flex flex-col justify-between text-white" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <div className="space-y-3 mt-4">
+          <p className="text-3xl font-bold leading-relaxed">
+            <span className="bg-white text-[#00897B] px-3 py-1 inline-block rounded-md">Дорогой друг</span>
+            <span className="inline-block ml-2">, я буду отмечать свой День Рождения</span>
+          </p>
           
-          <div className="text-3xl font-bold">
+          <p className="text-3xl font-bold">
             в Лазертаг-клубе «BUNKER»
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>по адресу</span>
-            <span className="bg-white text-[#00897B] px-3 py-1 rounded-md">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">по адресу</span>
+            <span className="bg-white text-[#00897B] px-3 py-1 inline-block rounded-md ml-2 min-w-[280px]">
               {invitationData.address || '________________________'}
             </span>
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>на площадке</span>
-            <span className="bg-white text-[#00897B] px-3 py-1 rounded-md">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">на площадке</span>
+            <span className="bg-white text-[#00897B] px-3 py-1 inline-block rounded-md ml-2 min-w-[200px]">
               {invitationData.location || '______________'}
             </span>
-          </div>
+          </p>
 
-          <div className="text-3xl font-bold flex items-center gap-2">
-            <span>с</span>
-            <span className="bg-white text-[#00897B] px-2 py-1 rounded-md w-24 text-center">
+          <p className="text-3xl font-bold">
+            <span className="inline-block">с</span>
+            <span className="bg-white text-[#00897B] px-2 py-1 inline-block rounded-md mx-2 w-24 text-center">
               {invitationData.timeFrom || '_____'}
             </span>
-            <span>до</span>
-            <span className="bg-white text-[#00897B] px-2 py-1 rounded-md w-24 text-center">
+            <span className="inline-block">до</span>
+            <span className="bg-white text-[#00897B] px-2 py-1 inline-block rounded-md ml-2 w-24 text-center">
               {invitationData.timeTo || '_____'}
             </span>
-          </div>
+          </p>
         </div>
 
-        <div className="mt-8 pt-6 border-t-4 border-[#00695C]">
-          <div className="text-5xl font-black text-center tracking-wider">
+        <div className="border-t-4 border-[#00695C] pt-5">
+          <p className="text-5xl font-black text-center tracking-wider">
             БУДУ ЖДАТЬ ТЕБЯ!
-          </div>
+          </p>
         </div>
       </div>
 
@@ -258,56 +252,55 @@ const Index = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#121212] relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-black via-[#1a1a1a] to-black opacity-90"></div>
+    <div className="min-h-screen bg-gradient-to-br from-[#3d3020] via-[#4a5234] to-[#2d3821] relative overflow-hidden">
+      <div className="absolute inset-0 opacity-20">
+        <svg className="w-full h-full">
+          <defs>
+            <pattern id="camo" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
+              <path d="M0,0 Q50,25 100,0 T200,0 L200,50 Q150,75 100,50 T0,50 Z" fill="#5a6b3f" opacity="0.6"/>
+              <ellipse cx="50" cy="100" rx="60" ry="40" fill="#4a5234" opacity="0.5"/>
+              <ellipse cx="150" cy="150" rx="50" ry="60" fill="#3d3020" opacity="0.7"/>
+              <path d="M0,150 Q25,175 50,150 T100,150 L100,200 Q75,225 50,200 T0,200 Z" fill="#2d3821" opacity="0.6"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#camo)"/>
+        </svg>
+      </div>
       
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute top-20 left-10 w-1 h-40 bg-gradient-to-b from-red-500 to-transparent animate-laser-shoot"></div>
-        <div className="absolute top-40 right-20 w-1 h-40 bg-gradient-to-b from-[#00BCD4] to-transparent animate-laser-shoot" style={{ animationDelay: '0.7s' }}></div>
-        <div className="absolute bottom-40 left-1/3 w-1 h-40 bg-gradient-to-b from-yellow-500 to-transparent animate-laser-shoot" style={{ animationDelay: '1.4s' }}></div>
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-10">
+        <div className="absolute top-20 left-10 w-1 h-40 bg-gradient-to-b from-[#8B7355] to-transparent animate-laser-shoot"></div>
+        <div className="absolute top-40 right-20 w-1 h-40 bg-gradient-to-b from-[#6B8E23] to-transparent animate-laser-shoot" style={{ animationDelay: '0.7s' }}></div>
+        <div className="absolute bottom-40 left-1/3 w-1 h-40 bg-gradient-to-b from-[#A0826D] to-transparent animate-laser-shoot" style={{ animationDelay: '1.4s' }}></div>
       </div>
 
       <div className="container mx-auto px-4 py-12 relative z-10">
         <header className="text-center mb-16">
           <div className="flex items-center justify-center gap-6 mb-6">
-            <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center">
-              <Icon name="Target" size={28} className="text-white" />
+            <div className="w-12 h-12 bg-[#6B4423] rounded-full flex items-center justify-center border-2 border-[#8B7355]">
+              <Icon name="Target" size={28} className="text-[#D4AF37]" />
             </div>
-            <h1 className="text-6xl md:text-7xl font-black text-white tracking-tight">
+            <h1 className="text-6xl md:text-7xl font-black text-[#D4AF37] tracking-tight drop-shadow-lg">
               ГЕНЕРАТОР ПРИГЛАСИТЕЛЬНЫХ
             </h1>
-            <div className="w-12 h-12 bg-[#00BCD4] rounded-full flex items-center justify-center">
-              <Icon name="Zap" size={28} className="text-white" />
+            <div className="w-12 h-12 bg-[#556B2F] rounded-full flex items-center justify-center border-2 border-[#6B8E23]">
+              <Icon name="Zap" size={28} className="text-[#D4AF37]" />
             </div>
           </div>
-          <p className="text-xl text-gray-400 font-medium">
+          <p className="text-xl text-[#C5B358] font-bold">
             Лазертаг-клуб BUNKER
           </p>
         </header>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
-          <Card className="p-8 bg-[#1E1E1E] border-2 border-red-600/30 shadow-2xl">
+          <Card className="p-8 bg-[#2d2416]/90 backdrop-blur-sm border-2 border-[#6B4423] shadow-2xl">
             <div className="flex items-center gap-3 mb-8">
-              <Icon name="FileEdit" size={32} className="text-red-500" />
-              <h2 className="text-3xl font-black text-white">Заполните данные</h2>
+              <Icon name="FileEdit" size={32} className="text-[#D4AF37]" />
+              <h2 className="text-3xl font-black text-[#D4AF37]">Заполните данные</h2>
             </div>
             
             <div className="space-y-6 mb-8">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-gray-300 font-semibold text-base">
-                  Имя именинника
-                </Label>
-                <Input
-                  id="name"
-                  placeholder="Введите имя"
-                  value={invitationData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="address" className="text-gray-300 font-semibold text-base">
+                <Label htmlFor="address" className="text-[#C5B358] font-semibold text-base">
                   Адрес
                 </Label>
                 <Input
@@ -315,12 +308,12 @@ const Index = () => {
                   placeholder="ул. Ленина, 123"
                   value={invitationData.address}
                   onChange={(e) => handleInputChange('address', e.target.value)}
-                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                  className="bg-[#3d3020] border-2 border-[#6B4423] focus:border-[#D4AF37] text-white text-lg h-12 rounded-lg"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="location" className="text-gray-300 font-semibold text-base">
+                <Label htmlFor="location" className="text-[#C5B358] font-semibold text-base">
                   Площадка
                 </Label>
                 <Input
@@ -328,13 +321,13 @@ const Index = () => {
                   placeholder="Красный зал"
                   value={invitationData.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
-                  className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                  className="bg-[#3d3020] border-2 border-[#6B4423] focus:border-[#D4AF37] text-white text-lg h-12 rounded-lg"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="timeFrom" className="text-gray-300 font-semibold text-base">
+                  <Label htmlFor="timeFrom" className="text-[#C5B358] font-semibold text-base">
                     Время начала
                   </Label>
                   <Input
@@ -342,11 +335,11 @@ const Index = () => {
                     type="time"
                     value={invitationData.timeFrom}
                     onChange={(e) => handleInputChange('timeFrom', e.target.value)}
-                    className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                    className="bg-[#3d3020] border-2 border-[#6B4423] focus:border-[#D4AF37] text-white text-lg h-12 rounded-lg"
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="timeTo" className="text-gray-300 font-semibold text-base">
+                  <Label htmlFor="timeTo" className="text-[#C5B358] font-semibold text-base">
                     Время окончания
                   </Label>
                   <Input
@@ -354,23 +347,23 @@ const Index = () => {
                     type="time"
                     value={invitationData.timeTo}
                     onChange={(e) => handleInputChange('timeTo', e.target.value)}
-                    className="bg-[#2A2A2A] border-2 border-gray-700 focus:border-red-500 text-white text-lg h-12 rounded-lg"
+                    className="bg-[#3d3020] border-2 border-[#6B4423] focus:border-[#D4AF37] text-white text-lg h-12 rounded-lg"
                   />
                 </div>
               </div>
             </div>
 
             <div className="space-y-4 mb-8">
-              <Label className="text-gray-300 font-semibold text-base">Выберите дизайн</Label>
+              <Label className="text-[#C5B358] font-semibold text-base">Выберите дизайн</Label>
               <RadioGroup value={selectedTemplate} onValueChange={(value: 'red' | 'teal') => setSelectedTemplate(value)}>
-                <div className="flex items-center space-x-2 p-3 bg-[#2A2A2A] rounded-lg border-2 border-gray-700 hover:border-red-500 transition-colors">
+                <div className="flex items-center space-x-2 p-3 bg-[#3d3020] rounded-lg border-2 border-[#6B4423] hover:border-[#D4AF37] transition-colors">
                   <RadioGroupItem value="red" id="red" />
                   <Label htmlFor="red" className="flex-1 cursor-pointer text-white font-medium">
                     Красный дизайн
                   </Label>
                   <div className="w-8 h-8 bg-gradient-to-br from-red-500 to-red-700 rounded"></div>
                 </div>
-                <div className="flex items-center space-x-2 p-3 bg-[#2A2A2A] rounded-lg border-2 border-gray-700 hover:border-[#00BCD4] transition-colors">
+                <div className="flex items-center space-x-2 p-3 bg-[#3d3020] rounded-lg border-2 border-[#6B4423] hover:border-[#D4AF37] transition-colors">
                   <RadioGroupItem value="teal" id="teal" />
                   <Label htmlFor="teal" className="flex-1 cursor-pointer text-white font-medium">
                     Бирюзовый дизайн
@@ -382,7 +375,7 @@ const Index = () => {
 
             <Button 
               onClick={handleDownload}
-              className="w-full h-14 text-xl font-black bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white rounded-lg shadow-lg hover:shadow-red-500/50 transition-all duration-300"
+              className="w-full h-14 text-xl font-black bg-gradient-to-r from-[#6B4423] to-[#8B7355] hover:from-[#8B7355] hover:to-[#6B4423] text-[#D4AF37] rounded-lg shadow-lg hover:shadow-[#D4AF37]/50 transition-all duration-300 border-2 border-[#D4AF37]"
             >
               <Icon name="Download" size={24} className="mr-3" />
               Скачать пригласительное
@@ -391,25 +384,27 @@ const Index = () => {
 
           <div className="space-y-6">
             <div className="flex items-center gap-3 mb-4">
-              <Icon name="Eye" size={32} className="text-[#00BCD4]" />
-              <h2 className="text-3xl font-black text-white">Предпросмотр</h2>
+              <Icon name="Eye" size={32} className="text-[#D4AF37]" />
+              <h2 className="text-3xl font-black text-[#D4AF37]">Предпросмотр</h2>
             </div>
             
-            <div className="bg-[#1E1E1E] p-6 rounded-xl border-2 border-[#00BCD4]/30 shadow-2xl">
-              <div className="flex justify-center items-center" style={{ transform: 'scale(0.7)', transformOrigin: 'top center' }}>
-                <div ref={invitationRef}>
-                  {selectedTemplate === 'red' ? <RedTemplate /> : <TealTemplate />}
+            <div className="bg-[#2d2416]/90 backdrop-blur-sm p-6 rounded-xl border-2 border-[#6B4423] shadow-2xl">
+              <div className="flex justify-center items-center overflow-x-auto">
+                <div style={{ transform: 'scale(0.7)', transformOrigin: 'top center' }}>
+                  <div ref={invitationRef}>
+                    {selectedTemplate === 'red' ? <RedTemplate /> : <TealTemplate />}
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#1E1E1E] p-6 rounded-xl border-2 border-yellow-500/30">
+            <div className="bg-[#2d2416]/90 backdrop-blur-sm p-6 rounded-xl border-2 border-[#6B8E23]">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Icon name="Info" size={20} className="text-black" />
+                <div className="w-10 h-10 bg-[#6B8E23] rounded-full flex items-center justify-center flex-shrink-0">
+                  <Icon name="Info" size={20} className="text-[#D4AF37]" />
                 </div>
-                <div className="text-gray-300">
-                  <p className="font-semibold text-white mb-2">Как использовать:</p>
+                <div className="text-[#C5B358]">
+                  <p className="font-semibold text-[#D4AF37] mb-2">Как использовать:</p>
                   <ul className="space-y-1 text-sm">
                     <li>• Заполните все поля формы</li>
                     <li>• Выберите понравившийся дизайн</li>
